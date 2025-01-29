@@ -1,3 +1,6 @@
+// Button function imports
+import { addTask } from "./addTask.js";
+
 // Function to append icons
 function appendIcon(element, iconClass) {
     const icon = document.createElement('i');
@@ -7,7 +10,7 @@ function appendIcon(element, iconClass) {
 
 const navLinks = document.querySelectorAll('aside nav ul li a');
 
-// Define icon classes for each navlinks
+// Define icon classes for each navlink
 const iconMap = [
     'fas fa-home',           // Dashboard
     'fas fa-plus-circle',    // Add Task
@@ -16,17 +19,18 @@ const iconMap = [
     'fas fa-calendar-week',  // This week
     'fas fa-calendar-alt',   // This month
     'fas fa-check-square',   // Completed tasks
-    'fas fa-angle-double-right', // Collapse
 ];
 
-// Loop through navLinks and append icons
+// Loop through navLinks + append icons
 navLinks.forEach((link, index) => {
     appendIcon(link, iconMap[index]);
 });
 
-const resizeBtn = document.querySelector('[data-resize-btn]');
-
-resizeBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.body.classList.toggle('sb-expanded');
-});
+//Add Task button
+const addTaskButton = navLinks[1];
+if (addTaskButton) {
+    addTaskButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevents navigation if it's an <a> tag
+        addTask();
+    });
+}

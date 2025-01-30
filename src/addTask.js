@@ -22,6 +22,16 @@ export function addTask() {
                     <input type="date" id="task-date" name="task-date" required>
                 </label>
 
+                <label for="task-priority">
+                    Task Priority
+                    <select name="priorities" id="task-priority">
+                        <option value="" disabled selected> ------ Select Priority ------ </option>
+                        <option value="low"> Low Importance </option>
+                        <option value="medium"> Medium Importance </option>
+                        <option value="high"> High Importance </option>
+                    </select>
+                </label>
+
                 <button type="submit">Add Task</button>
             </form>
 
@@ -59,9 +69,10 @@ export function addTask() {
         const taskName = form.querySelector('#task-name').value;
         const taskDescription = form.querySelector('#task-description').value;
         const taskDate = form.querySelector('#task-date').value;
+        const taskPriority = form.querySelector('#task-priority').value;
 
         // Task handling logic
-        console.log('Task Details:', { taskName, taskDescription, taskDate });
+        console.log('Task Details:', { taskName, taskDescription, taskDate, taskPriority });
         
         closeModal();
     });

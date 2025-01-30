@@ -14,7 +14,6 @@ const navLinks = document.querySelectorAll('aside nav ul li a');
 const iconMap = [
     'fas fa-home',           // Dashboard
     'fas fa-plus-circle',    // Add Task
-    'fas fa-calendar',       // All Tasks
     'fas fa-calendar-day',   // Today
     'fas fa-calendar-week',  // This week
     'fas fa-calendar-alt',   // This month
@@ -27,7 +26,7 @@ navLinks.forEach((link, index) => {
 });
 
 //Add Task button
-const addTaskButton = navLinks[1];
+const addTaskButton = navLinks[1]; // Index position of the Add Task button
 if (addTaskButton) {
     addTaskButton.addEventListener('click', (event) => {
         event.preventDefault(); // Prevents navigation if it's an <a> tag

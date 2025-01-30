@@ -178,7 +178,7 @@ form label {
     color: #e5e5e5;
 }
 
-form input, textarea {
+form input, textarea, select {
     width: 100%;
     padding: 0.75rem;
     font-size: 1rem;
@@ -194,11 +194,11 @@ form textarea {
     resize: vertical;
 }
 
-form input:hover, textarea:hover {
+form input:hover, textarea:hover, select:hover {
     border-color: #444;
 }
 
-form input:focus, textarea:focus {
+form input:focus, textarea:focus, select:hover {
     outline: none;
     border-color: #1E90FF;
     box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
@@ -217,6 +217,15 @@ main {
     padding: 1rem 2rem;
 }
 
+#mainGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    border: 2px solid green; /* REMOVE WHEN DONE */
+}
+.card {
+    border: 1px solid red; /* REMOVE WHEN DONE */
+}
 
 /* Media Queries */
 @media (min-width: 768px) {

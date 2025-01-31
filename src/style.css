@@ -223,7 +223,7 @@ main {
     gap: 1.5rem;
     border: 2px solid green; /* REMOVE WHEN DONE */
 }
-.card {
+.task-card {
     border: 1px solid red; /* REMOVE WHEN DONE */
 }
 

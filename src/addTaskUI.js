@@ -1,5 +1,16 @@
-export function addTask() {
-    
+export function closeModal() {
+    const addTaskModal = document.querySelector('.modal');
+    if (addTaskModal) {
+        addTaskModal.classList.remove('show');
+        // Wait for animation to complete before removing modal
+        setTimeout(() => {
+            addTaskModal.remove();
+        }, 300); // CSS transition duration
+    }
+}
+
+export function addTaskUI() {
+    console.log("creating modal");
     // Create and append modal
     const addTaskModal = document.createElement('div');
     addTaskModal.classList.add('modal');
@@ -44,38 +55,12 @@ export function addTask() {
         addTaskModal.classList.add('show');
     });
 
-    function closeModal() {
-        addTaskModal.classList.remove('show');
-        // Wait for animation to complete before removing modal
-        setTimeout(() => {
-            addTaskModal.remove();
-        }, 300); // CSS transition duration
-    }
-
     addTaskModal.addEventListener('click', (event) => {
         if (event.target === addTaskModal) {
             closeModal();
         }
     });
 
-
-
-    // Form submission handler
-    const form = addTaskModal.querySelector('form');
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form data
-        const taskName = form.querySelector('#task-name').value;
-        const taskDescription = form.querySelector('#task-description').value;
-        const taskDate = form.querySelector('#task-date').value;
-        const taskPriority = form.querySelector('#task-priority').value;
-
-        // Task handling logic
-        console.log('Task Details:', { taskName, taskDescription, taskDate, taskPriority });
-        
-        closeModal();
-    });
 
     // Escape key handler
     const handleEscape = (e) => {
@@ -87,4 +72,5 @@ export function addTask() {
     
     document.addEventListener('keydown', handleEscape);
 
+    return addTaskModal.querySelector('form'); // Return form to hook into formSubmit.js
 }

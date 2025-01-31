@@ -1,5 +1,5 @@
-// Button function imports
-import { addTask } from "./addTask.js";
+/* // Button function imports
+import { addTaskUI } from "./addTaskUI.js"; */
 
 // Function to append icons
 function appendIcon(element, iconClass) {
@@ -25,11 +25,11 @@ navLinks.forEach((link, index) => {
     appendIcon(link, iconMap[index]);
 });
 
-//Add Task button
+/* //Add Task button
 const addTaskButton = navLinks[1]; // Index position of the Add Task button
 if (addTaskButton) {
     addTaskButton.addEventListener('click', (event) => {
         event.preventDefault(); // Prevents navigation if it's an <a> tag
-        addTask();
+        addTaskUI();
     });
-}
+} */

@@ -10,6 +10,14 @@ export const taskManager = {
             <p id="task-description-card"> ${task.description} </p>
             <p id="task-deadline-card"> <i>Deadline: </i> ${task.date} </p>
             <p id="task-priority-card"> <i>Priority: </i> ${task.priority} </p>
+
+            <p id="task-status-card">
+                <label for="task-status-${task.id}" class="task-checkbox">
+                    <input type="checkbox" id="task-status-${task.id}" name="task-status" ${task.status ? 'checked' : ''}>
+                    <span class="checkmark"></span> Completed
+                </label>
+            </p>
+
             <button class="delete-task"> Delete </button>
         `;
         

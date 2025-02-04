@@ -30,7 +30,7 @@ export function addTaskUI() {
             
                 <label for="task-date">
                     Task Deadline
-                    <input type="date" id="task-date" name="task-date" max="9999-12-31" required>
+                    <input type="text" id="task-date" name="task-date" placeholder="DD-MM-YYYY" required>
                 </label>
 
                 <label for="task-priority">

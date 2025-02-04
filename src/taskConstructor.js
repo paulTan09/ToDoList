@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const allTasks = [];
 
 class Task{
@@ -9,6 +11,7 @@ class Task{
         this.description = description;
         this.date = date;
         this.priority = priority;
+        this.createdAt = format(new Date(), 'dd-MM-yyyy | hh:mm a'); //12hr format (i like it more)
         this.id = ++Task.taskCount; // ID tracker
     }
     // Task Adder

@@ -42,10 +42,11 @@ function setupFormListener() {
 
         
         // Create a new task
-        const newTask = new Task(taskName, taskDescription, formattedDate, taskPriority);
+        //const newTask = new Task(taskName, taskDescription, formattedDate, taskPriority);
+        Task.taskAdder(taskName, taskDescription, formattedDate, taskPriority);
 
         // Add task to UI
-        taskManager.addTaskToGrid(newTask);
+        taskManager.addTaskToGrid(allTasks[allTasks.length - 1]);
 
         // Clear form
         form.reset();
@@ -53,6 +54,6 @@ function setupFormListener() {
         // Close modal
         closeModal();
 
-        console.log(`task created ${allTasks}`); // fix it
+        console.log(`All tasks ${allTasks}`); // fix it
     });
 }

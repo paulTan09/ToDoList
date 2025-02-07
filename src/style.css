@@ -32,7 +32,7 @@ button {
     border: none;
     border-radius: 0.375rem;
     background-color: #3BB9FF;
-    color: white;
+    color: #1e1e1e;
     font-weight: 500;
     transition: all 0.2s ease-in-out;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -361,6 +361,29 @@ main {
     }
 }
 /* Cards shrinking animation END */
+
+
+/* Notification popup */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3BB9FF;
+    color: #1e1e1e;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+/* Notification popup END */
 
 
 /* Media Queries */

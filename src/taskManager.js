@@ -3,6 +3,8 @@ import { allTasks } from './taskConstructor.js';
 
 const taskGrid = document.querySelector('#mainGrid');
 const completedTasksSection = document.querySelector('#completedTasks');
+const mainHeader = document.createElement('h1');
+mainHeader.classList.add('header-Grid');
 
 export const taskManager = {
     currentView: 'dashboard', // keep track of current view status
@@ -11,9 +13,15 @@ export const taskManager = {
     getTasksforView() {
         switch(this.currentView) {
             case 'dashboard':
+                mainHeader.textContent = 'Dashboard';
+                document.querySelector('main').prepend(mainHeader);
                 return allTasks.filter(task => !task.completed);
+
             case 'completed':
+                mainHeader.textContent = 'Completed Tasks';
+                document.querySelector('main').prepend(mainHeader);
                 return allTasks.filter(task => task.completed);
+                
             // also add more cases for the other sidebar btns
             default:
                 return allTasks;
@@ -54,16 +62,22 @@ export const taskManager = {
             <button class="delete-task"> Delete </button>
         `;
 
-        // Handle task completion functinoality
+        // Handle task completion functionality
         const checkbox = taskElement.querySelector(`#task-status-${task.id}`);
 
-        // Set initialstate
+        // Set initial state
         checkbox.checked = task.completed;
 
         checkbox.addEventListener('change', () => {
             task.completed = checkbox.checked; // Update task state
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
         
+            // Show appropriate notification
+            if (task.completed) {
+                this.showNotification(`"${task.name}" moved to Completed Tasks`);
+            } else {
+                this.showNotification(`"${task.name}" moved to Dashboard`);
+            }
 
             // Handle task animation and view updates
             if ((this.currentView === 'dashboard' && task.completed) || 
@@ -89,6 +103,34 @@ export const taskManager = {
         });
 
         taskGrid.appendChild(taskElement);
+    },
+
+    showNotification(message) {
+
+        // Remove existing notification (if present)
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        // Create notification popup
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        // Animation
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        // Remove notification after delay
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 2000);
     },
 
     moveTaskToCompleted(task, taskElement) {

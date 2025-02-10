@@ -64,6 +64,60 @@ button:focus-visible {
 /* Buttons END */
 
 
+/* Sidebar icon animations */
+.fa-home {
+    transition: transform 0.3s ease
+}
+.home-sidebar:hover .fa-home {
+    transform: translateY(-4px);
+}
+
+
+.fa-plus-circle {
+    transition: transform 0.3s ease;
+}
+.add-task-sidebar:hover .fa-plus-circle {
+    transform: rotate(180deg);
+}
+
+
+.fa-calendar-day {
+    transition: transform 0.3s ease;
+}
+.today-sidebar:hover .fa-calendar-day {
+    transform: scale(1.2) rotate(-90deg);
+}
+
+
+.fa-calendar-week {
+    transition: transform 0.3s ease;
+}
+.this-week-sidebar:hover .fa-calendar-week {
+    transform: scale(1.2) rotate(-180deg);
+}
+
+
+.fa-calendar-alt {
+    transition: transform 0.3s ease;
+}
+.this-month-sidebar:hover .fa-calendar-alt {
+    transform: scale(1.2) rotate(-360deg);
+}
+
+
+.fa-check-square {
+    transition: transform 0.3s ease;
+}
+.completed-tasks-sidebar:hover .fa-check-square {
+    animation: pulse 0.5s ease infinite
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+/* Sidebar icon animations END */
+
 /* Sidebar */
 aside {
     position: fixed;

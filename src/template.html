@@ -10,6 +10,7 @@
     <aside>
         <nav>
             <ul>
+
                 <li>
                     <a href="#" class="active"><span>Dashboard</span> </a>
                 </li>
@@ -34,9 +35,19 @@
                     <a href="#"><span>Completed tasks</span> </a>
                 </li>
 
-                <li>
-                    <a href="#"><span>Theme (WIP)</span> </a>
+                <li class="theme-dropdown">
+                    <a href="#" class="dropdown-trigger">
+                        <span>Theme</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-theme="auto"><i class="fas fa-circle-half-stroke"></i> Auto</a></li>
+                        <li><a href="#" data-theme="light"><i class="fas fa-sun"></i> Light</a></li>
+                        <li><a href="#" data-theme="dark"><i class="fas fa-moon"></i> Dark</a></li>
+                    </ul>
                 </li>
+                
+
             </ul>
         </nav>
     </aside>

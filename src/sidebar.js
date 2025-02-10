@@ -22,28 +22,42 @@ const iconMap = [
 
 // Loop through navLinks + append icons
 navLinks.forEach((link, index) => {
-    appendIcon(link, iconMap[index]);
 
+    // Only append icons to non-dropdown menu items
+    if (!link.closest('.dropdown-menu')) {
+        appendIcon(link, iconMap[index]);
+    }
 
-    // Add click event listener to change active class
     link.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        // Remove active class from all links
-        navLinks.forEach((nav) => nav.classList.remove('active'));
-        this.classList.add('active'); // Add active class to clicked link
-
-        // Update current view based on clicked link
-        const linkText = this.querySelector('span').textContent.toLowerCase();
-        if (linkText.includes('completed')) {
-            taskManager.currentView = 'completed';
-        } else if (linkText.includes('dashboard')) {
-            taskManager.currentView = 'dashboard';
+        
+        // Prevent default behavior on all non-dropdown menu items
+        if (!this.closest('.dropdown-menu')) {
+            e.preventDefault();
         }
-        // Add other view cases!!
 
-        // Refresh grid
-        taskManager.refreshTaskGrid();
+        // If this link is the theme toggle, exit the handler to avoid adding the active class
+        if (this.classList.contains('dropdown-trigger')) {
+            return;
+        }
 
+        // Only handle active class for main nav items
+        if (!this.closest('.dropdown-menu')) {
+            
+            // Remove active class from all links
+            navLinks.forEach((nav) => nav.classList.remove('active'));
+            this.classList.add('active');
+
+            // Update current view based on clicked link
+            const linkText = this.textContent.toLowerCase();
+            if (linkText.includes('completed')) {
+                taskManager.currentView = 'completed';
+            } else if (linkText.includes('dashboard')) {
+                taskManager.currentView = 'dashboard';
+            }
+            // Add other view cases!!
+
+            // Refresh grid
+            taskManager.refreshTaskGrid();
+        }
     });
 });

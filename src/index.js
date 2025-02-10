@@ -3,6 +3,8 @@ import './sidebar.js';
 import './formSubmit.js';
 import './localStorage.js';
 import { taskManager } from './taskManager.js';
+import './themeSwitch.js';
+
 console.log('Welcome to your Webpack template!');
 
 // Start dashboard on pageload

@@ -1,3 +1,10 @@
+root {
+    --background-color: #121212;
+    --sidebar-color: #1e1e1e;
+    --text-color: #e5e5e2;
+    --modal-color: #1e1e1e;
+    --card-color: #2e2e2e;
+}
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,8 +13,8 @@
 body {
     --sb-width: 5rem;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #121212;
-    color: #e5e5e2;
+    background-color: var(--background-color);
+    color: var(--text-color);
     line-height: 1.7;
     font-size: 16px;
 }
@@ -63,7 +70,7 @@ aside {
     inset: 0 auto 0 0;
     padding: 1rem;
     width: 5rem;
-    background-color: #1e1e1e;
+    background-color: var(--sidebar-color);
     transition: width 0.5s ease-in-out;
 }
 
@@ -79,14 +86,18 @@ aside:hover nav a span {
 
 nav {
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    height: 100%;
-    flex-flow: column;
+    flex-direction: column;
     gap: 0.25rem;
+    flex: 1;
+    padding: 0;
+    margin: 0;
 }
 
 nav a {
@@ -104,15 +115,15 @@ nav a {
     color 0.5s ease-in-out;
 }
 
-nav a:hover {
+nav li:not(.theme-dropdown) a:hover { /* Exclude theme dropdown from hover effect */
     color: #3BB9FF;
-    background-color: #121212;
+    background-color: var(--background-color);
 }
 
 nav a.active,
 nav a:focus-visible {
     color: #1E90FF;
-    background-color: #121212;
+    background-color: var(--background-color);
 }
 
 nav a:focus-visible {
@@ -129,10 +140,94 @@ nav a span {
     visibility 0.3s ease-in-out;
 }
 
-nav li:last-child {
+
+/* Sidebar END */
+
+
+/* Theme toggle */
+.theme-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    cursor: pointer;
     margin-top: auto;
 }
-/* Sidebar END */
+
+.dropdown-menu {
+    position: absolute;
+    margin-top: auto;
+    bottom: 100%;
+    background-color: var(--card-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+/* Show dropdown on hover */
+.theme-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dropdown-menu a {
+    display: flex;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--card-color);
+    color: #3BB9FF;
+    box-shadow: inset 0 0 5px rgba(59, 185, 255, 0.5);
+    
+}
+
+/* Dropdown trigger icon || default chevron pos */
+.dropdown-trigger .fa-chevron-down {
+    position: absolute;
+    right: 0.875rem;
+    margin-left: 0;
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Show chevron when sidebar expands*/
+aside:hover .dropdown-trigger .fa-chevron-down {
+    opacity: 1;
+    visibility: visible;
+}
+
+.theme-dropdown:hover .fa-chevron-down { /* Rotate chevron on hover */
+    transform: rotate(180deg);
+}
+
+/* Theme text pos */
+.dropdown-trigger span {
+    margin-left: 0.625rem;
+}
+/* Theme toggle END */
 
 
 /* Add Task Modal */ 
@@ -157,7 +252,7 @@ nav li:last-child {
 .modal-content {
     width: 90%;
     max-width: 500px;
-    background-color: #1e1e1e;
+    background-color: var(--modal-color);
     padding: 2rem;
     border-radius: 0.75rem;
     transform: translateY(-20px);
@@ -185,7 +280,7 @@ form label {
     align-items: flex-start;
     gap: 0.5rem;
     font-size: 1rem;
-    color: #e5e5e5;
+    color: var(--text-color);
 }
 
 form input, textarea, select {
@@ -194,8 +289,8 @@ form input, textarea, select {
     font-size: 1rem;
     border: 1px solid #333;
     border-radius: 0.5rem;
-    background-color: #121212;
-    color: #e5e5e2;
+    background-color: var(--background-color);
+    color: var(--text-color);
     transition: all 0.2s ease;
 }
 
@@ -237,7 +332,7 @@ main {
 .task-card {
     display: flex;
     flex-direction: column;
-    background-color: #2e2e2e;
+    background-color: var(--card-color);
     border: 1px solid #444;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
@@ -257,13 +352,13 @@ main {
     align-self: center;
     margin-top: 0;
     font-size: 1.4em;
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .task-card p {
     margin: 8px 0;
     font-size: 1em;
-    color: #ccc;
+    color: var(--text-color);
 }
 
 
@@ -396,3 +491,5 @@ main {
         margin-left: 12.5rem;
     }
 }
+    /* prefers-color-scheme is inside themeSwitch.js */
+/* Media Queries END */

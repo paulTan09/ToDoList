@@ -1,3 +1,5 @@
+import { taskManager } from './taskManager.js';
+
 export function closeModal() {
     const addTaskModal = document.querySelector('.modal');
     if (addTaskModal) {
@@ -10,7 +12,13 @@ export function closeModal() {
 }
 
 export function addTaskUI() {
-    console.log("creating modal");
+    // Switch to Dashboard before opening modal
+    if (taskManager.currentView !== 'dashboard') {
+        taskManager.currentView = 'dashboard';
+        taskManager.refreshTaskGrid();
+        taskManager.showNotification("Switched to Dashboard for new tasks");
+    }
+
     // Create and append modal
     const addTaskModal = document.createElement('div');
     addTaskModal.classList.add('modal');

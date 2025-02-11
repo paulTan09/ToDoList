@@ -495,9 +495,9 @@ main {
     box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.4);
 }
 
- .priority-high { background-color: #FF4C5B; }
- .priority-medium { background-color: #F49D37; }
- .priority-low { background-color: #3AAFA9; }
+ .priority-high { background-color: #1976D2; }
+ .priority-medium { background-color: #FFA000; }
+ .priority-low { background-color: #00796B; }
     /* Task card elements styling END */
 /* Main END */
 

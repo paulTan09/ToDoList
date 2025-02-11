@@ -59,5 +59,21 @@ navLinks.forEach((link, index) => {
             // Refresh grid
             taskManager.refreshTaskGrid();
         }
+
+        document.querySelector('.today-sidebar').addEventListener('click', () => {
+            taskManager.currentView = 'today';
+            taskManager.refreshTaskGrid();
+        });
+        
+        document.querySelector('.this-week-sidebar').addEventListener('click', () => {
+            taskManager.currentView = 'this-week';
+            taskManager.refreshTaskGrid();
+        });
+        
+        document.querySelector('.this-month-sidebar').addEventListener('click', () => {
+            taskManager.currentView = 'this-month';
+            taskManager.refreshTaskGrid();
+        });
+        
     });
 });

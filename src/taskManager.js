@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { isToday, isThisWeek, isThisMonth, parseISO, format } from 'date-fns';
 import { allTasks } from './taskConstructor.js';
 
 const taskGrid = document.querySelector('#mainGrid');
@@ -11,20 +11,53 @@ export const taskManager = {
 
     // Method to filter tasks based on view/button press
     getTasksforView() {
-        switch(this.currentView) {
+        mainHeader.textContent = this.getHeaderText();
+        document.querySelector('main').prepend(mainHeader);
+    
+        let filteredTasks = [];
+    
+        switch (this.currentView) {
             case 'dashboard':
-                mainHeader.textContent = 'Dashboard';
-                document.querySelector('main').prepend(mainHeader);
-                return allTasks.filter(task => !task.completed);
-
+                filteredTasks = allTasks.filter(task => !task.completed);
+                break;
             case 'completed':
-                mainHeader.textContent = 'Completed Tasks';
-                document.querySelector('main').prepend(mainHeader);
-                return allTasks.filter(task => task.completed);
-                
-            // also add more cases for the other sidebar btns
+                filteredTasks = allTasks.filter(task => task.completed);
+                break;
+            case 'today':
+                filteredTasks = allTasks.filter(task => isToday(parseISO(task.date)));
+                break;
+            case 'this-week':
+                filteredTasks = allTasks.filter(task => 
+                    !isToday(parseISO(task.date)) && isThisWeek(parseISO(task.date))
+                );
+                break;
+            case 'this-month':
+                filteredTasks = allTasks.filter(task => 
+                    !isToday(parseISO(task.date)) && 
+                    !isThisWeek(parseISO(task.date)) && 
+                    isThisMonth(parseISO(task.date))
+                );
+                break;
             default:
-                return allTasks;
+                // Show all incomplete tasks by default
+                filteredTasks = allTasks.filter(task => !task.completed);
+        }
+    
+        // Sort by priority after filtering
+        return filteredTasks.sort((a, b) => {
+            const priorityOrder = { high: 1, medium: 2, low: 3 };
+            return priorityOrder[a.priority] - priorityOrder[b.priority];
+        });
+    },
+
+    getHeaderText() {
+        switch (this.currentView) {
+            case 'dashboard': return 'Dashboard';
+            case 'completed': return 'Completed Tasks';
+            case 'today': return 'Today’s Tasks';
+            case 'this-week': return 'This Week’s Tasks';
+            case 'this-month': return 'This Month’s Tasks';
+            default: return 'Tasks';
         }
     },
 
@@ -41,16 +74,17 @@ export const taskManager = {
        
         const taskElement = document.createElement('div');
         taskElement.classList.add('task-card');
+        taskElement.classList.add(`priority-${task.priority}`);
 
         // Format data for display purposes
         const displayDate = format(new Date(task.date), 'PPPP');
 
         taskElement.innerHTML = `
             <h3>${task.name}</h3>
+            <p id="task-createdDate-card"> <i>Created at: </i> ${task.createdAt} </p>
             <p id="task-description-card"> ${task.description} </p>
             <p id="task-deadline-card"> <i>Deadline: </i> ${displayDate} </p>
             <p id="task-priority-card"> <i>Priority: </i> ${task.priority} </p>
-            <p id="task-createdDate-card"> <i>Created at: </i> ${task.createdAt} </p>
 
             <p id="task-status-card">
                 <label for="task-status-${task.id}" class="task-checkbox">
@@ -72,21 +106,24 @@ export const taskManager = {
             task.completed = checkbox.checked; // Update task state
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
         
-            // Show appropriate notification
             if (task.completed) {
                 this.showNotification(`"${task.name}" moved to Completed Tasks`);
             } else {
                 this.showNotification(`"${task.name}" moved to Dashboard`);
             }
-
-            // Handle task animation and view updates
-            if ((this.currentView === 'dashboard' && task.completed) || 
-                (this.currentView === 'completed' && !task.completed)) {
-                // Animate if the task no longer belongs in current view
+        
+            // Remove the task from the current view
+            if (task.completed) {
                 taskElement.style.animation = "shrinkOut 0.3s ease forwards";
                 setTimeout(() => {
                     taskElement.remove();
+                    if (this.currentView === 'completed') {
+                        this.addTaskToGrid(task); // If in "Completed Tasks", re-add task
+                    }
                 }, 300);
+            } else {
+                // Refresh the grid to ensure it's removed from the completed view
+                this.refreshTaskGrid();
             }
         });
         

@@ -13,6 +13,29 @@ export const taskManager = {
     getTasksforView() {
         mainHeader.textContent = this.getHeaderText();
         document.querySelector('main').prepend(mainHeader);
+
+        // Only add progress indicator on Dashboard
+        if (this.currentView === 'dashboard') {
+            if (!document.querySelector('.progress-container')) {
+                const progressContainer = document.createElement('div');
+                progressContainer.classList.add('progress-container');
+                progressContainer.innerHTML = `
+                    <svg viewBox="0 0 36 36" class="circular-progress">
+                        <path class="circle-bg" d="M18 2a16 16 0 1 1 0 32 16 16 0 1 1 0-32" />
+                        <path class="circle-bar" d="M18 2a16 16 0 1 1 0 32 16 16 0 1 1 0-32" />
+                    </svg>
+                    <span class="progress-text">0%</span>
+                    <span class="tooltip-icon"><i class="fa-solid fa-info-circle"></i></span>
+                    <span class="tooltip-text">To see all completed tasks, go to "Completed Tasks" in the sidebar</span>
+                `;
+
+                mainHeader.appendChild(progressContainer);
+            }
+        } else {
+            // Remove progress indicator if switching to another view
+            const progressElement = document.querySelector('.progress-container');
+            if (progressElement) progressElement.remove();
+        }
     
         let filteredTasks = [];
     
@@ -61,13 +84,33 @@ export const taskManager = {
         }
     },
 
+    updateProgressCircle() {
+        const totalTasks = allTasks.length; // Count ALL tasks, not just filtered ones
+        const completedTasks = allTasks.filter(task => task.completed).length;
+        const progress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+    
+        const progressText = document.querySelector('.progress-text');
+        const progressCircle = document.querySelector('.circle-bar');
+    
+        if (progressText) {
+            progressText.textContent = `${progress}%`;
+        }
+        if (progressCircle) {
+            progressCircle.style.strokeDasharray = `${progress}, 100`;
+        }
+    },
+    
     // Method to refresh the main grid
     refreshTaskGrid() {
         const taskGrid = document.querySelector('#mainGrid');
         taskGrid.innerHTML = ''; // Clear grid
-
+    
         const tasksToShow = this.getTasksforView();
         tasksToShow.forEach(task => this.addTaskToGrid(task));
+    
+        if (this.currentView === 'dashboard') {
+            this.updateProgressCircle();
+        }
     },
 
     addTaskToGrid(task) {
@@ -112,19 +155,26 @@ export const taskManager = {
                 this.showNotification(`"${task.name}" moved to Dashboard`);
             }
         
-            // Remove the task from the current view
             if (task.completed) {
-                taskElement.style.animation = "shrinkOut 0.3s ease forwards";
-                setTimeout(() => {
-                    taskElement.remove();
-                    if (this.currentView === 'completed') {
-                        this.addTaskToGrid(task); // If in "Completed Tasks", re-add task
-                    }
-                }, 300);
+                this.showNotification(`"${task.name}" moved to Completed Tasks`);
             } else {
-                // Refresh the grid to ensure it's removed from the completed view
-                this.refreshTaskGrid();
+                this.showNotification(`"${task.name}" moved to Dashboard`);
             }
+        
+            // Remove from the current view if necessary
+            taskElement.style.animation = "shrinkOut 0.3s ease forwards";
+            setTimeout(() => {
+                taskElement.remove();
+                
+                // Refresh only if in dashboard
+                if (this.currentView === 'dashboard') {
+                    this.refreshTaskGrid();
+                }
+        
+                // Force progress bar update
+                this.updateProgressCircle();
+        
+            }, 300);
         });
         
         // Delete btn functionality
@@ -185,7 +235,6 @@ export const taskManager = {
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
         }
 
-        console.log(`Task "${task.name}" moved to completed tasks.`);
     }
 
 };

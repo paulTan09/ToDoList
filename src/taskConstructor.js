@@ -24,8 +24,6 @@ class Task {
 
         // Save updated tasks to localStorage
         localStorage.setItem('allTasks', JSON.stringify(allTasks));
-
-        console.log(`task added. total: ${Task.taskCount}`);
     }
 
     // Task Remover
@@ -37,8 +35,6 @@ class Task {
     
             // Update localStorage
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
-    
-            console.log(`Task removed. Total: ${Task.taskCount}`);
         }
     }
 

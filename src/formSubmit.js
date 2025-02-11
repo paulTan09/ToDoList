@@ -48,12 +48,14 @@ function setupFormListener() {
         // Add task to UI
         taskManager.addTaskToGrid(allTasks[allTasks.length - 1]);
 
+        taskManager.refreshTaskGrid();
+        taskManager.updateProgressCircle();
+
         // Clear form
         form.reset();
 
         // Close modal
         closeModal();
 
-        console.log(`All tasks ${allTasks}`); // fix it
     });
 }

@@ -6,14 +6,15 @@ class Task {
 
     static taskCount = 0;
 
-    constructor(name, description, date, priority, completed = false, createdAt = null) {
+    constructor(name, description, date, priority, completed = false, createdOn = null, completedOn = null) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.priority = priority;
-        this.createdAt = createdAt || format(new Date(), 'dd-MM-yyyy | hh:mm a'); // for loading the date on pageload OR for creating a new task date
+        this.createdOn = createdOn || format(new Date(), 'PP p'); // for loading the date on pageload OR for creating a new task date
         this.id = ++Task.taskCount; // ID tracker
         this.completed = completed;
+        this.completedOn = completedOn;
     }
 
     // Task Adder
@@ -44,7 +45,7 @@ class Task {
 // Load tasks from localStorage
 const storedTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 storedTasks.forEach(task => {
-    allTasks.push(new Task(task.name, task.description, task.date, task.priority, task.completed, task.createdAt));
+    allTasks.push(new Task(task.name, task.description, task.date, task.priority, task.completed, task.createdOn, task.completedOn));
 });
 
 

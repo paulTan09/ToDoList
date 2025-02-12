@@ -405,6 +405,7 @@ main h1 {
     padding: 16px;
     margin: 12px 0;
     max-width: 400px;
+    height: 100%;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -432,17 +433,25 @@ main h1 {
     padding: 8px;
     background: rgba(255, 255, 255, 0.05);
     border-left: 3px solid #888;
-    font-style: italic;
     white-space: pre-wrap;
 }
 
 #task-priority-card {
     text-transform: capitalize;
 }
-
+.priority-high #task-priority-card {
+    color: #1976D2;
+}
+.priority-medium #task-priority-card {
+    color: #FFA000;
+}
+.priority-low #task-priority-card {
+    color: #00796B;
+}
 
 #task-status-card {
     align-self: flex-end;
+    margin-top: auto;
 }
 
 .task-checkbox {
@@ -494,7 +503,7 @@ main h1 {
     cursor: pointer;
     font-size: 0.9em;
     transition: background-color 0.2s ease;
-    margin-top: auto;
+    margin-top: 10px;
 }
 
 .delete-task:hover {
@@ -507,9 +516,19 @@ main h1 {
     box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.4);
 }
 
- .priority-high { background-color: #1976D2; }
+
+.task-card .task-completed-time {
+    font-size: 0.9em;
+    color: #4caf50;
+    margin-top: 8px 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+ /* .priority-high { background-color: #1976D2; }
  .priority-medium { background-color: #FFA000; }
- .priority-low { background-color: #00796B; }
+ .priority-low { background-color: #00796B; } */
     /* Task card elements styling END */
 
     /* Progress bar styling */

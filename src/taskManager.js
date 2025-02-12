@@ -120,14 +120,14 @@ export const taskManager = {
         taskElement.classList.add(`priority-${task.priority}`);
 
         // Format data for display purposes
-        const displayDate = format(new Date(task.date), 'PPPP');
+        const displayDate = format(new Date(task.date), 'PP');
 
         taskElement.innerHTML = `
             <h3>${task.name}</h3>
-            <p id="task-createdDate-card"> <i>Created at: </i> ${task.createdAt} </p>
+            <p id="task-createdDate-card">Created on ${task.createdOn} </p>
             <p id="task-description-card"> ${task.description} </p>
-            <p id="task-deadline-card"> <i>Deadline: </i> ${displayDate} </p>
-            <p id="task-priority-card"> <i>Priority: </i> ${task.priority} </p>
+            <p id="task-deadline-card"> <b>Deadline: ${displayDate} </b></p>
+            <p id="task-priority-card"> <b>${task.priority} Priority </b></p>
 
             <p id="task-status-card">
                 <label for="task-status-${task.id}" class="task-checkbox">
@@ -147,19 +147,20 @@ export const taskManager = {
 
         checkbox.addEventListener('change', () => {
             task.completed = checkbox.checked; // Update task state
+        
+            if (task.completed) {
+                this.showNotification(`"${task.name}" moved to Completed Tasks`);
+
+                if (!task.completedOn) {
+                    task.completedOn = format(new Date(), 'PP p'); // i.e February 12, 2025 at 4:46pm
+                }
+            } else {
+                this.showNotification(`"${task.name}" moved to Dashboard`);
+                 // Remove completed timestamp if unchecked
+                task.completedOn = null;
+            }
+
             localStorage.setItem('allTasks', JSON.stringify(allTasks));
-        
-            if (task.completed) {
-                this.showNotification(`"${task.name}" moved to Completed Tasks`);
-            } else {
-                this.showNotification(`"${task.name}" moved to Dashboard`);
-            }
-        
-            if (task.completed) {
-                this.showNotification(`"${task.name}" moved to Completed Tasks`);
-            } else {
-                this.showNotification(`"${task.name}" moved to Dashboard`);
-            }
         
             // Remove from the current view if necessary
             taskElement.style.animation = "shrinkOut 0.3s ease forwards";
@@ -169,11 +170,10 @@ export const taskManager = {
                 // Refresh only if in dashboard
                 if (this.currentView === 'dashboard') {
                     this.refreshTaskGrid();
+                } else {
+                    // Force progress bar update
+                    this.updateProgressCircle();
                 }
-        
-                // Force progress bar update
-                this.updateProgressCircle();
-        
             }, 300);
         });
         
@@ -190,6 +190,16 @@ export const taskManager = {
         });
 
         taskGrid.appendChild(taskElement);
+
+        // Append the "completed at" p tag in "Completed view"
+        if (this.currentView === 'completed' && task.completedOn) {
+            const completedText = document.createElement('p');
+            completedText.classList.add('task-completed-time');
+            completedText.textContent = `Completed on ${task.completedOn}`;
+
+            const deleteButton = taskElement.querySelector('.delete-task');
+            taskElement.insertBefore(completedText, deleteButton);
+        }
     },
 
     showNotification(message) {

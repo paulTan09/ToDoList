@@ -47,18 +47,24 @@ export const taskManager = {
                 filteredTasks = allTasks.filter(task => task.completed);
                 break;
             case 'today':
-                filteredTasks = allTasks.filter(task => isToday(parseISO(task.date)));
+                filteredTasks = allTasks.filter(task => 
+                    isToday(parseISO(task.date)) &&
+                    !task.completed
+                );
                 break;
             case 'this-week':
                 filteredTasks = allTasks.filter(task => 
-                    !isToday(parseISO(task.date)) && isThisWeek(parseISO(task.date))
+                    !isToday(parseISO(task.date)) && 
+                    isThisWeek(parseISO(task.date)) && 
+                    !task.completed
                 );
                 break;
             case 'this-month':
                 filteredTasks = allTasks.filter(task => 
                     !isToday(parseISO(task.date)) && 
                     !isThisWeek(parseISO(task.date)) && 
-                    isThisMonth(parseISO(task.date))
+                    isThisMonth(parseISO(task.date)) &&
+                    !task.completed
                 );
                 break;
             default:
@@ -127,15 +133,18 @@ export const taskManager = {
             <p id="task-createdDate-card">Created on ${task.createdOn} </p>
             <p id="task-description-card"> ${task.description} </p>
             <p id="task-deadline-card"> <b>Deadline: ${displayDate} </b></p>
-            <p id="task-priority-card"> <b>${task.priority} Priority </b></p>
+            <div class="priority-status-container">
 
-            <p id="task-status-card">
-                <label for="task-status-${task.id}" class="task-checkbox">
-                    <input type="checkbox" id="task-status-${task.id}" name="task-status" ${task.status ? 'checked' : ''}>
-                    <span class="checkmark"></span> Completed
-                </label>
-            </p>
+                <p id="task-priority-card"> <b>${task.priority} Priority </b></p>
 
+                <p id="task-status-card">
+                    <label for="task-status-${task.id}" class="task-checkbox">
+                        <input type="checkbox" id="task-status-${task.id}" name="task-status" ${task.status ? 'checked' : ''}>
+                        <span class="checkmark"></span> Completed
+                    </label>
+                </p>
+                
+            </div>
             <button class="delete-task"> Delete </button>
         `;
 

@@ -18,16 +18,12 @@ body {
     line-height: 1.7;
     font-size: 16px;
 }
-body.sb-expanded {
-    --sb-width: 12.5rem;
-}
+body.sb-expanded { --sb-width: 12.5rem; }
 h1 {
     font-size: 1.5rem;
     font-weight: bold;
 }
-p {
-    margin-bottom: 1.5rem;
-}
+p { margin-bottom: 1.5rem; }
 /* Body config END */
 
 
@@ -66,49 +62,41 @@ button:focus-visible {
 
 
 /* Sidebar icon animations */
-.fa-home {
-    transition: transform 0.3s ease
-}
+.fa-home { transition: transform 0.3s ease }
+
 .home-sidebar:hover .fa-home {
     transform: translateY(-4px);
 }
 
+.fa-plus-circle { transition: transform 0.3s ease; }
 
-.fa-plus-circle {
-    transition: transform 0.3s ease;
-}
 .add-task-sidebar:hover .fa-plus-circle {
     transform: rotate(180deg);
 }
 
 
-.fa-calendar-day {
-    transition: transform 0.3s ease;
-}
+.fa-calendar-day { transition: transform 0.3s ease; }
+
 .today-sidebar:hover .fa-calendar-day {
     transform: scale(1.2) rotate(-90deg);
 }
 
+.fa-calendar-week { transition: transform 0.3s ease; }
 
-.fa-calendar-week {
-    transition: transform 0.3s ease;
-}
 .this-week-sidebar:hover .fa-calendar-week {
     transform: scale(1.2) rotate(-180deg);
 }
 
 
-.fa-calendar-alt {
-    transition: transform 0.3s ease;
-}
+.fa-calendar-alt { transition: transform 0.3s ease; }
+
 .this-month-sidebar:hover .fa-calendar-alt {
     transform: scale(1.2) rotate(-360deg);
 }
 
 
-.fa-check-square {
-    transition: transform 0.3s ease;
-}
+.fa-check-square { transition: transform 0.3s ease; }
+
 .completed-tasks-sidebar:hover .fa-check-square {
     animation: pulse 0.5s ease infinite
 }
@@ -130,15 +118,12 @@ aside {
     user-select: none;
 }
 
-aside:hover {
-    width: 12.5rem;
-}
+aside:hover { width: 12.5rem; }
 
 aside:hover nav a span {
     opacity: 1;
     visibility: visible;
 }
-
 
 nav {
     height: 100%;
@@ -195,8 +180,6 @@ nav a span {
     opacity 0.3s ease-in-out,
     visibility 0.3s ease-in-out;
 }
-
-
 /* Sidebar END */
 
 
@@ -432,22 +415,21 @@ main h1 {
 #task-description-card {
     padding: 8px;
     background: rgba(255, 255, 255, 0.05);
-    border-left: 3px solid #888;
+    border: 2px solid #888;
+    border-radius: 10px;
     white-space: pre-wrap;
 }
 
-#task-priority-card {
-    text-transform: capitalize;
-}
-.priority-high #task-priority-card {
-    color: #1976D2;
-}
-.priority-medium #task-priority-card {
-    color: #FFA000;
-}
-.priority-low #task-priority-card {
-    color: #00796B;
-}
+#task-deadline-card { text-align: center; }
+
+#task-priority-card { text-transform: capitalize; }
+
+.priority-high #task-priority-card { color: #1976D2; }
+    
+.priority-medium #task-priority-card { color: #FFA000; }
+    
+.priority-low #task-priority-card { color: #00796B; }
+    
 
 #task-status-card {
     align-self: flex-end;
@@ -463,9 +445,7 @@ main h1 {
     user-select: none;
 }
 
-.task-checkbox input {
-    display: none;
-}
+.task-checkbox input { display: none; }
 
 .checkmark {
     width: 18px;
@@ -493,6 +473,13 @@ main h1 {
     font-weight: bold;
 }
 
+.priority-status-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+}
 
 .delete-task {
     background-color: #ff4d4f;          
@@ -506,9 +493,7 @@ main h1 {
     margin-top: 10px;
 }
 
-.delete-task:hover {
-    background-color: #e04344;
-}
+.delete-task:hover { background-color: #e04344; }
 
 .delete-task:focus,
 .delete-task:active {
@@ -524,11 +509,6 @@ main h1 {
     font-weight: bold;
     text-align: center;
 }
-
-
- /* .priority-high { background-color: #1976D2; }
- .priority-medium { background-color: #FFA000; }
- .priority-low { background-color: #00796B; } */
     /* Task card elements styling END */
 
     /* Progress bar styling */

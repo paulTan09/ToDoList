@@ -206,6 +206,11 @@ export const taskManager = {
                 
                 taskElement.style.animation = "shrinkOut 0.3s ease forwards";
                 setTimeout(() => taskElement.remove(), 300);
+
+                this.showNotification(`"${task.name}" deleted`);
+
+                // Force progress bar update
+                this.updateProgressCircle();
             }
         });
 

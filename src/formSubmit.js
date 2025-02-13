@@ -8,6 +8,16 @@ let form = null;
 
 document.querySelector('.add-task-sidebar').addEventListener('click', () => {
     form = addTaskUI(); // Only create the modal when needed
+
+    if (form) {
+        const taskDateInput = form.querySelector('#task-date');
+        if (taskDateInput) {
+            const today = new Date();
+            const formattedToday = format(today, 'dd-MM-yyyy');
+            taskDateInput.setAttribute('placeholder', `${formattedToday} or later`);
+            taskDateInput.dataset.minDate = format(today, 'yyyy-MM-dd'); // Store dataset for validation
+        }
+    }
     setupFormListener();
 });
 
@@ -20,7 +30,9 @@ function setupFormListener() {
         // Get form data
         const taskName = form.querySelector('#task-name').value.trim();
         const taskDescription = form.querySelector('#task-description').value.trim();
-        const taskDate = form.querySelector('#task-date').value.trim();
+        const taskDateInput = form.querySelector('#task-date');
+        const taskDate = taskDateInput.value.trim();
+        const minDate = taskDateInput.dataset.minDate;
         const taskPriority = form.querySelector('#task-priority').value;
 
         if (!taskName || !taskDescription || !taskDate || !taskPriority) {
@@ -38,11 +50,15 @@ function setupFormListener() {
         }
             // Format date before storing it
         const formattedDate = format(parsedDate, 'yyyy-MM-dd');
+
+            // Prevent past dates
+        if (formattedDate < minDate) {
+            alert("You can't select a past date.");
+            return;
+        }
         /* Date formatting END */
 
-        
         // Create a new task
-        //const newTask = new Task(taskName, taskDescription, formattedDate, taskPriority);
         Task.taskAdder(taskName, taskDescription, formattedDate, taskPriority);
 
         // Add task to UI

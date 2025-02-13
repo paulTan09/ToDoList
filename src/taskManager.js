@@ -1,4 +1,4 @@
-import { isToday, isThisWeek, isThisMonth, parseISO, format } from 'date-fns';
+import { isPast, isToday, isThisWeek, isThisMonth, parseISO, format } from 'date-fns';
 import { allTasks } from './taskConstructor.js';
 
 const taskGrid = document.querySelector('#mainGrid');
@@ -126,16 +126,27 @@ export const taskManager = {
         taskElement.classList.add(`priority-${task.priority}`);
 
         // Format data for display purposes
-        const displayDate = format(new Date(task.date), 'PP');
+        // const displayDate = format(new Date(task.date), 'PP');
 
+        // Format deadline
+        const taskDate = parseISO(task.date);
+        let deadlineText;
+
+        if (isToday(taskDate)) {
+            deadlineText = 'Deadline Today!';
+        } else if (isPast(taskDate)) {
+            deadlineText = `Deadline was on ${format(taskDate, 'PP')}`;
+        } else {
+            deadlineText = `Deadline: ${format(taskDate, 'PP')}`;
+        }
         taskElement.innerHTML = `
             <h3>${task.name}</h3>
             <p id="task-createdDate-card">Created on ${task.createdOn} </p>
             <p id="task-description-card"> ${task.description} </p>
-            <p id="task-deadline-card"> <b>Deadline: ${displayDate} </b></p>
+            <p id="task-deadline-card"> <b> ${deadlineText} </b></p>
             <div class="priority-status-container">
 
-                <p id="task-priority-card"> <b>${task.priority} Priority </b></p>
+                <p id="task-priority-card"> <b> ${task.priority} Priority </b></p>
 
                 <p id="task-status-card">
                     <label for="task-status-${task.id}" class="task-checkbox">

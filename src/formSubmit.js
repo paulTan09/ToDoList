@@ -1,5 +1,5 @@
-import { Task, allTasks } from './taskConstructor.js'; // FINE
-import { taskManager } from './taskManager.js'; //FINE
+import { Task, allTasks } from './taskConstructor.js';
+import { taskManager } from './taskManager.js';
 import { addTaskUI, closeModal } from './addTaskUI.js';
 import { parse, isValid, format } from 'date-fns';
 

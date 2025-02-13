@@ -1,5 +1,5 @@
 // Theme creation
-const themes = { /* MODAL IS 1e1e1e ON DARK MODE SO it should be f0f0f0 on light mode (identical scheme)*/
+const themes = {
     light: {
         background: '#ffffff',
         sidebar: '#f0f0f0',

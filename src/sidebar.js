@@ -54,7 +54,6 @@ navLinks.forEach((link, index) => {
             } else if (linkText.includes('dashboard')) {
                 taskManager.currentView = 'dashboard';
             }
-            // Add other view cases!!
 
             // Refresh grid
             taskManager.refreshTaskGrid();
